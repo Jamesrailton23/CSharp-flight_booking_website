@@ -79,6 +79,7 @@ namespace flight_booking_website
         {
             //CUSTOMER AIRLINE CHOICE WITH COST + SEATING CLASS WITH COST
 
+
             //SEAT CLASS----------------------------------------------------------------
             string seating = "";
             seating = (rb_class_eco.Checked) ? seating = "Economy" : seating;
@@ -140,13 +141,10 @@ namespace flight_booking_website
             if (rb_class_eco.Checked) seat_tax = 0;
             else if (rb_class_business.Checked) seat_tax = 1;
             else seat_tax = 2;
-           
             tax_amount = extra_tax[airline_tax, seat_tax];
 
 
             //TOTAL COST (LABEL)------------------------------------------------------------------------------
-
-
             final_price = tax_amount + double.Parse(ticket_cost.Text);
             final_price = (total_time_ammount.TotalDays > 25) ? final_price + 30.99 : final_price;
             label_final_cost.Text = String.Format("{0:C}", final_price);
