@@ -103,7 +103,7 @@ namespace flight_booking_website
 
             //AIRLINE + SEATING COST--------------------------------------------------
             airline_and_seating_cost = total_price[airline_cost, seating_cost];
-            ticket_cost.Text = String.Format("{0}", airline_and_seating_cost);
+            ticket_cost.Text = airline_and_seating_cost.ToString();
             ticket_cost_c_sign.Text = "£";
         }
 
@@ -145,7 +145,7 @@ namespace flight_booking_website
 
 
             //TOTAL COST (LABEL)------------------------------------------------------------------------------
-            final_price = tax_amount + double.Parse(ticket_cost.Text);
+            final_price = tax_amount + airline_and_seating_cost;
             final_price = (total_time_ammount.TotalDays > 25) ? final_price + 30.99 : final_price;
             label_final_cost.Text = String.Format("{0:C}", final_price);
 
