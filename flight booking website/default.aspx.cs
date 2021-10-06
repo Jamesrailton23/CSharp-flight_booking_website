@@ -17,7 +17,7 @@ namespace flight_booking_website
         double final_price;
 
 
-        protected void Page_Load(object sender, EventArgs e)
+       public void Page_Load(object sender, EventArgs e)
         {
             //AIRLINE + SEATING CLASS (ARRAY DEFINING)-------
             total_price = new double[4, 3];
@@ -51,7 +51,7 @@ namespace flight_booking_website
             label_date.Text = DateTime.Now.ToLongDateString();
         }
 
-        protected void button_name_Click(object sender, EventArgs e)
+        public void button_name_Click(object sender, EventArgs e)
         {
             //CUSTOMER NAME-----------------------------------------------------------
            string first_name = (textbox_f_name.Text);
@@ -62,7 +62,7 @@ namespace flight_booking_website
            
         }
 
-        protected void button_airline_Click(object sender, EventArgs e)
+        public void button_airline_Click(object sender, EventArgs e)
         {
             //CUSTOMER AIRLINE-----------------------------------------------------------------------------------
             string airline = "";
@@ -75,39 +75,12 @@ namespace flight_booking_website
 
         }
 
-        protected void button_seating_Click(object sender, EventArgs e)
+        public void button_seating_Click(object sender, EventArgs e)
         {
-            //CUSTOMER AIRLINE CHOICE WITH COST + SEATING CLASS WITH COST
-
-
-            //SEAT CLASS----------------------------------------------------------------
-            string seating = "";
-            seating = (rb_class_eco.Checked) ? seating = "Economy" : seating;
-            seating = (rb_class_business.Checked) ? seating = "Bussiness" : seating;
-            seating = (rb_class_first.Checked) ? seating = "First" : seating;
-            label_seating.Text = seating;
-            label_seating_class.Text = "You have selected " + seating;
-
-            //AIRLINE PRICE----------------------------------------------------------
-            int airline_cost;
-            if (rb_ba.Checked) airline_cost = 0;
-            else if (rb_BCF.Checked) airline_cost = 1;
-            else if (rb_ezy.Checked) airline_cost = 2;
-            else airline_cost = 3;
-            
-            //SEATING PRICE------------------------------------------------------
-            int seating_cost;
-            if (rb_class_eco.Checked) seating_cost = 0;
-            else if (rb_class_business.Checked) seating_cost = 1;
-            else seating_cost = 2;
-
-            //AIRLINE + SEATING COST--------------------------------------------------
-            airline_and_seating_cost = total_price[airline_cost, seating_cost];
-            ticket_cost.Text = airline_and_seating_cost.ToString();
-            ticket_cost_c_sign.Text = "£";
+            seatingairline();
         }
 
-        protected void button_confirm_Click(object sender, EventArgs e)
+        public void button_confirm_Click(object sender, EventArgs e)
         {
             // CALANDER STATEMENTS--------------------------------------------------------------------------------------
             TimeSpan total_time_ammount = cal_ari.SelectedDate.Subtract(cal_dep.SelectedDate);
@@ -145,11 +118,46 @@ namespace flight_booking_website
 
 
             //TOTAL COST (LABEL)------------------------------------------------------------------------------
-            final_price = tax_amount + double.Parse(ticket_cost.Text);
+            final_price = tax_amount + seatingairline();
             final_price = (total_time_ammount.TotalDays > 25) ? final_price + 30.99 : final_price;
             label_final_cost.Text = String.Format("{0:C}", final_price);
 
-
+         
         }
+        
+        public double seatingairline()
+        {
+            //CUSTOMER AIRLINE CHOICE WITH COST + SEATING CLASS WITH COST
+
+
+            //SEAT CLASS----------------------------------------------------------------
+            string seating = "";
+            seating = (rb_class_eco.Checked) ? seating = "Economy" : seating;
+            seating = (rb_class_business.Checked) ? seating = "Bussiness" : seating;
+            seating = (rb_class_first.Checked) ? seating = "First" : seating;
+            label_seating.Text = seating;
+            label_seating_class.Text = "You have selected " + seating;
+
+            //AIRLINE PRICE----------------------------------------------------------
+            int airline_cost;
+            if (rb_ba.Checked) airline_cost = 0;
+            else if (rb_BCF.Checked) airline_cost = 1;
+            else if (rb_ezy.Checked) airline_cost = 2;
+            else airline_cost = 3;
+
+            //SEATING PRICE------------------------------------------------------
+            int seating_cost;
+            if (rb_class_eco.Checked) seating_cost = 0;
+            else if (rb_class_business.Checked) seating_cost = 1;
+            else seating_cost = 2;
+
+            //AIRLINE + SEATING COST--------------------------------------------------
+            airline_and_seating_cost = total_price[airline_cost, seating_cost];
+            ticket_cost.Text = airline_and_seating_cost.ToString();
+            ticket_cost_c_sign.Text = "£";
+            return airline_and_seating_cost;
+        }
+
     }
+
 }
